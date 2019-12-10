@@ -4,16 +4,16 @@ Automatically upload your Unifi CloudKey backups to Dropbox.
 USAGE:
 
   1. Create a Dropbox app ("Unifi CloudKey") at https://www.dropbox.com/developers/apps/create.
-  2. Create a folder ("backups") for your app. 
-    * You can get the curl command, including the token, at https://www.dropbox.com/developers/documentation/http/documentation#files-create_folder
-    * Update it with the path to the backup folder. It should look alot like this - 
+  2. Create a folder ("backups") for your app.
+      * You can get the curl command, including the token, at https://www.dropbox.com/developers/documentation/http/documentation#files-create_folder.
+      * Update it with the path to the backup folder. It should look alot like this - 
 ```
 $ curl -X POST https://api.dropboxapi.com/2/files/create_folder_v2 \
 --header "Authorization: Bearer XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" \
 --header "Content-Type: application/json" \
 --data "{\"path\": \"/backups\",\"autorename\": false}"
 ```
-    * Run it on the CloudKey. The response should look like this - 
+      * Run it on the CloudKey. The response should look like this - 
 ```
 {"metadata": {"name": "backups", "path_lower": "/backups", "path_display": "/backups", "id": "id:YYYYYYYYYYYYYYY"}}
 ```
