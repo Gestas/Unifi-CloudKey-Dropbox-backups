@@ -13,7 +13,7 @@ $ curl -X POST https://api.dropboxapi.com/2/files/create_folder_v2 \
 --header "Content-Type: application/json" \
 --data "{\"path\": \"/backups\",\"autorename\": false}"
 ```
-      * Run it on the CloudKey. The response should look like this - 
+Run it on the CloudKey. The response should look like this - 
 ```
 {"metadata": {"name": "backups", "path_lower": "/backups", "path_display": "/backups", "id": "id:YYYYYYYYYYYYYYY"}}
 ```
