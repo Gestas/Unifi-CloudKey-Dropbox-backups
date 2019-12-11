@@ -25,7 +25,7 @@ chmod +x /usr/bin/Pi-Hole_Cloudflare_TLS.sh
 ```
   4. Update the script with your Dropbox token (from the earlier folder creation step) -
 ```
-vi /usr/bin/Pi-Hole_Cloudflare_TLS.sh
+vi /usr/bin/CloudKey-Dropbox-backups.sh
 ```
   5. Add a task to cron. My CloudKey creates a backup everyday at 4PM so I run this upload script at 5 -
   ```
