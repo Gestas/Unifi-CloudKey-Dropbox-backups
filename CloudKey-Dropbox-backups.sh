@@ -27,7 +27,7 @@ upload_backups() {
     for _f in "$SRC_DIR"/*.unf; do
         _response_code="$(do_upload "$_f" "add")"
         if [[ "$_response_code" -eq "200" ]]; then
-            log "Backup of $_f uploaded to Dropbox."
+            log "$_f uploaded to Dropbox."
         else 
             log "Backup $_f failed to upload to Dropbox. Response code $_response_code"
             exit 1
@@ -65,14 +65,12 @@ do_upload() {
 }
 
 main() {
-    log "Starting $0"
     printf "%s\n" "Starting $0"
     log "########## Starting upload ##########"
     upload_backups
     log "########## Complete #########"
     log " "
     /sbin/fsync "$LOG_FILE"
-    log "$0 done."
     upload_log
     printf "%s\n" "$0 complete"
     exit 0
