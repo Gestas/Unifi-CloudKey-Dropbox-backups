@@ -25,7 +25,7 @@ upload_backups() {
     local _response_code
 
     for _f in "$SRC_DIR"/*.unf; do
-        _response_code="$(do_upload "$_f")"
+        _response_code="$(do_upload "$_f" "add")"
         if [[ "$_response_code" -eq "200" ]]; then
             log "Backup of $_f uploaded to Dropbox."
         else 
@@ -38,7 +38,7 @@ upload_backups() {
 upload_log(){
     local _response_code
 
-    _response_code="$(do_upload "$LOG_FILE")"
+    _response_code="$(do_upload "$LOG_FILE" "overwrite")"
     if [[ "$_response_code" -ne "200" ]]; then
         printf "%s\n" "$_now: Unable to upload the log. Response code $_response_code"
         exit 1
@@ -48,15 +48,17 @@ upload_log(){
 
 do_upload() {
     local _f
+    local _mode
     local _filename
     local _response_code
 
-    _f=$1
+    _f="$1"
+    _mode="$2"
 
     _filename="$(/usr/bin/basename "$_f")"
     _response_code=$(/usr/bin/curl -X POST -sL -w "%{http_code}" --output /dev/null https://content.dropboxapi.com/2/files/upload \
         --header "Authorization: Bearer $TOKEN" \
-        --header "Dropbox-API-Arg: {\"path\": \"$DEST_DIR/$_filename\",\"mode\": \"add\",\"autorename\": true,\"mute\": false,\"strict_conflict\": false}" \
+        --header "Dropbox-API-Arg: {\"path\": \"$DEST_DIR/$_filename\",\"mode\": \"$_mode\",\"autorename\": true,\"mute\": false,\"strict_conflict\": false}" \
         --header "Content-Type: application/octet-stream" \
         --data-binary @$_f)
     echo "$_response_code"
@@ -65,8 +67,10 @@ do_upload() {
 main() {
     log "Starting $0"
     printf "%s\n" "Starting $0"
+    log "########## Starting upload ##########"
     upload_backups
-    log "Uploading backups complete."
+    log "########## Complete #########"
+    log " "
     /sbin/fsync "$LOG_FILE"
     log "$0 done."
     upload_log
