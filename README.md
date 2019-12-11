@@ -21,7 +21,7 @@ Run it on the CloudKey. The response should look like this -
 ```
 $ wget -O /usr/bin/CloudKey-Dropbox-backups.sh \
 https://raw.githubusercontent.com/Gestas/Unifi-CloudKey-Dropbox-backups/master/CloudKey-Dropbox-backups.sh $$ \
-chmod +x /usr/bin/Pi-Hole_Cloudflare_TLS.sh
+chmod +x /usr/bin/CloudKey-Dropbox-backups.sh
 ```
   4. Update the script with your Dropbox token (from the earlier folder creation step) -
 ```
