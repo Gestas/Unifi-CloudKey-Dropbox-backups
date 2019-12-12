@@ -4,12 +4,12 @@ set -o errexit
 set -o pipefail
 
 ### This should be your Dropbox token - 
-readonly TOKEN=""
+readonly TOKEN="$1"
 
 ### Optionally change these - 
 readonly DEST_DIR="/backups"
 readonly SRC_DIR="/data/autobackup"
-readonly LOG_FILE="$SRC_DIR/dropbox-upload.log"
+readonly LOG_FILE="$SRC_DIR/cloudkey-backups-upload.log"
 
 log() {
     local _now
@@ -24,15 +24,26 @@ upload_backups() {
     local _f
     local _response_code
 
-    for _f in "$SRC_DIR"/*.unf; do
+    # Upload the *.unf files
+    for _f in "$SRC_DIR"/*.unf "$SRC_DIR"/*.json; do
         _response_code="$(do_upload "$_f" "add")"
         if [[ "$_response_code" -eq "200" ]]; then
             log "$_f uploaded to Dropbox."
         else 
-            log "Backup $_f failed to upload to Dropbox. Response code $_response_code"
+            log "Backup of $_f failed to upload to Dropbox. Response code $_response_code"
             exit 1
         fi
     done
+
+    # Upload the autobackup_meta.json file
+    _f="$SRC_DIR/autobackup_meta.json"
+    _response_code="$(do_upload "$_f" "overwrite")"
+        if [[ "$_response_code" -eq "200" ]]; then
+            log "$_f uploaded to Dropbox."
+        else 
+            log "Backup of $_f failed to upload to Dropbox. Response code $_response_code"
+            exit 1
+        fi
 }
 
 upload_log(){
