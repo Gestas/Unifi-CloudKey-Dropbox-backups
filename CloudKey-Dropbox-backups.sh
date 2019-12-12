@@ -3,7 +3,6 @@
 set -o errexit
 set -o pipefail
 
-### This should be your Dropbox token - 
 readonly TOKEN="$1"
 
 ### Optionally change these - 
