@@ -1,14 +1,17 @@
 #!/usr/bin/env bash
+# See https://github.com/Gestas/Unifi-CloudKey-Dropbox-backups
 
 set -o errexit
 set -o pipefail
 
 readonly TOKEN="$1"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 ### Optionally change these - 
 readonly DEST_DIR="/backups"
 readonly SRC_DIR="/data/autobackup"
 readonly LOG_FILE="$SRC_DIR/cloudkey-backups-upload.log"
+
 
 log() {
     local _now
